@@ -1,11 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
 
 :root {
+    /* 과일 테마 (기본) */
     --primary-color: #4CAF50;
     --primary-dark: #388E3C;
     --bg-color: #F1F8E9;
     --card-bg: #FFFFFF;
     --card-back: #8BC34A;
+    --card-back-gradient: linear-gradient(135deg, #aed581 0%, #8bc34a 100%);
+    --card-border: #7cb342;
+    --text-color: #333333;
+}
+
+body[data-theme="flower"] {
+    /* 꽃 테마 */
+    --primary-color: #E91E63;
+    --primary-dark: #C2185B;
+    --bg-color: #FDF2F4;
+    --card-bg: #FFFFFF;
+    --card-back: #F48FB1;
+    --card-back-gradient: linear-gradient(135deg, #f8bbd0 0%, #f48fb1 100%);
+    --card-border: #ec407a;
     --text-color: #333333;
 }
 
@@ -24,6 +39,7 @@ body {
     align-items: center;
     min-height: 100vh;
     touch-action: manipulation; /* 시니어 터치 오작동 방지 */
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .container {
@@ -42,6 +58,7 @@ h1 {
     color: var(--primary-dark);
     margin-bottom: 10px;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    transition: color 0.5s ease;
 }
 
 .stats {
@@ -98,8 +115,9 @@ h1 {
 
 .card-front {
     background-color: var(--card-back);
-    background-image: linear-gradient(135deg, #aed581 0%, #8bc34a 100%);
-    border-color: #7cb342;
+    background-image: var(--card-back-gradient);
+    border-color: var(--card-border);
+    transition: background-color 0.5s ease, border-color 0.5s ease, background-image 0.5s ease;
 }
 
 /* 물음표 아이콘 대신 예쁜 패턴이나 기호를 추가할 수 있음 */
@@ -219,4 +237,38 @@ h1 {
     h1 {
         font-size: 2.2rem;
     }
+}
+
+/* Game Selector Tabs */
+.game-selector {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0 25px 0;
+}
+
+.selector-btn {
+    background-color: #FFFFFF;
+    color: #555555;
+    border: 3px solid #E0E0E0;
+    padding: 14px 28px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: inherit;
+}
+
+.selector-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.selector-btn.active {
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+    border-color: var(--primary-color);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }

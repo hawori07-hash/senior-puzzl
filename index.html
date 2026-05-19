@@ -10,7 +10,11 @@
 <body>
     <div class="container">
         <header>
-            <h1>과일 짝맞추기 🍎</h1>
+            <h1 id="game-title">과일 짝맞추기 🍎</h1>
+            <div class="game-selector">
+                <button id="fruit-mode-btn" class="selector-btn active">🍎 과일 맞추기</button>
+                <button id="flower-mode-btn" class="selector-btn">🌸 꽃 맞추기</button>
+            </div>
             <div class="stats">
                 시도 횟수: <span id="moves">0</span>
             </div>
@@ -29,7 +33,7 @@
     <div id="success-modal" class="modal hidden">
         <div class="modal-content">
             <h2>축하합니다! 🎉</h2>
-            <p>모든 과일의 짝을 찾으셨어요.</p>
+            <p id="success-message">모든 과일의 짝을 찾으셨어요.</p>
             <p>총 시도 횟수: <span id="final-moves"></span>번</p>
             <button id="modal-restart-btn" class="btn primary-btn">한 번 더 하기</button>
         </div>

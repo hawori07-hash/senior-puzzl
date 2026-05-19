@@ -6,9 +6,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('success-modal');
     const finalMovesElement = document.getElementById('final-moves');
 
-    // 시니어에게 친숙하고 구분하기 쉬운 과일 이모지 (6종류, 총 12장)
-    const emojis = ['🍎', '🍌', '🍇', '🍉', '🍓', '🍊'];
-    
+    const gameTitle = document.getElementById('game-title');
+    const successMessage = document.getElementById('success-message');
+    const fruitModeBtn = document.getElementById('fruit-mode-btn');
+    const flowerModeBtn = document.getElementById('flower-mode-btn');
+
+    // 게임 모드 설정 (시니어분들이 식별하기 쉽고 화사한 이모지 모음)
+    const modes = {
+        fruit: {
+            title: '과일 짝맞추기 🍎',
+            emojis: ['🍎', '🍌', '🍇', '🍉', '🍓', '🍊'],
+            successText: '모든 과일의 짝을 찾으셨어요.',
+            theme: 'fruit'
+        },
+        flower: {
+            title: '꽃 짝맞추기 🌸',
+            emojis: ['🌸', '🌹', '🌻', '🌺', '🌷', '🌼'],
+            successText: '모든 꽃의 짝을 찾으셨어요.',
+            theme: 'flower'
+        }
+    };
+
+    let currentMode = 'fruit';
     let cards = [];
     let hasFlippedCard = false;
     let lockBoard = false;
@@ -26,6 +45,21 @@ document.addEventListener('DOMContentLoaded', () => {
         matchedPairs = 0;
         movesElement.textContent = moves;
         
+        // Update DOM for active mode
+        const modeInfo = modes[currentMode];
+        gameTitle.textContent = modeInfo.title;
+        successMessage.textContent = modeInfo.successText;
+        document.body.setAttribute('data-theme', modeInfo.theme);
+        
+        // Update active selector button state
+        if (currentMode === 'fruit') {
+            fruitModeBtn.classList.add('active');
+            flowerModeBtn.classList.remove('active');
+        } else {
+            flowerModeBtn.classList.add('active');
+            fruitModeBtn.classList.remove('active');
+        }
+
         // Hide modal
         modal.classList.add('hidden');
         
@@ -33,7 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
         gameBoard.innerHTML = '';
 
         // Create and shuffle deck
-        const deck = [...emojis, ...emojis];
+        const emojisList = modeInfo.emojis;
+        const deck = [...emojisList, ...emojisList];
         shuffleArray(deck);
 
         // Render cards
@@ -116,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         matchedPairs++;
         
         // 모든 짝을 맞췄을 때
-        if (matchedPairs === emojis.length) {
+        if (matchedPairs === modes[currentMode].emojis.length) {
             setTimeout(showSuccessModal, 800); // 애니메이션 볼 시간 제공
         }
 
@@ -147,6 +182,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event Listeners
     restartBtn.addEventListener('click', initGame);
     modalRestartBtn.addEventListener('click', initGame);
+
+    fruitModeBtn.addEventListener('click', () => {
+        if (currentMode === 'fruit') return;
+        currentMode = 'fruit';
+        initGame();
+    });
+
+    flowerModeBtn.addEventListener('click', () => {
+        if (currentMode === 'flower') return;
+        currentMode = 'flower';
+        initGame();
+    });
 
     // Initialize game on load
     initGame();
